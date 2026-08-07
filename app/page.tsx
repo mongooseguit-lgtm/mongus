@@ -110,15 +110,18 @@ export default function Home() {
             />
             <span className="cover-top">MONGUS — 001</span>
             <span className="cover-letter">M</span>
-            <span className="cover-bottom">NUEVO ADELANTO</span>
+            <span className="cover-bottom">NUEVOS ADELANTOS</span>
           </div>
           <div className="release-info">
-            <p className="status"><span /> DISPONIBLE AHORA</p>
-            <h3>BATTLE</h3>
+            <p className="status"><span /> DISPONIBLES AHORA</p>
+            <h3>ADELANTOS</h3>
             <p className="release-description">
-              Escucha el nuevo adelanto en exclusiva directamente desde el reproductor.
+              Escucha los primeros adelantos en exclusiva directamente desde el reproductor.
             </p>
-            <AudioPlayer src="/musica/BATTLE.mp3" title="BATTLE" />
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <AudioPlayer src="/musica/under-the-rain.mp3" title="UNDER THE RAIN" />
+              <AudioPlayer src="/musica/BATTLE.mp3" title="BATTLE" />
+            </div>
             <div className="platforms" aria-label="Plataformas próximamente">
               <span>SPOTIFY</span><span>APPLE MUSIC</span><span>YOUTUBE</span>
             </div>

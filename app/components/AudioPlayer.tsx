@@ -13,12 +13,25 @@ export default function AudioPlayer({ src, title }: AudioPlayerProps) {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
+  useEffect(() => {
+    const handlePauseOthers = (e: Event) => {
+      const customEvt = e as CustomEvent;
+      if (customEvt.detail !== src && audioRef.current && isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    };
+    window.addEventListener("pause-other-audio", handlePauseOthers);
+    return () => window.removeEventListener("pause-other-audio", handlePauseOthers);
+  }, [src, isPlaying]);
+
   const togglePlay = () => {
     if (!audioRef.current) return;
     if (isPlaying) {
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
+      window.dispatchEvent(new CustomEvent("pause-other-audio", { detail: src }));
       audioRef.current.play();
       setIsPlaying(true);
     }
