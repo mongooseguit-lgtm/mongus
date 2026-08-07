@@ -199,7 +199,7 @@ export default function Home() {
         <div className="footer-top">
           <p className="kicker">SIGUE LA SEÑAL</p>
           <h2>MANTENTE<br /><em>CERCA.</em></h2>
-          <a href="mailto:hola@mongus.mx">HOLA@MONGUS.MX <span>↗</span></a>
+          <a href="mailto:mongooseguit@gmail.com">mongooseguit@gmail.com <span>↗</span></a>
         </div>
         <div className="footer-bottom">
           <span>© 2026 MONGUS</span>
