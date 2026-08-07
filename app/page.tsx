@@ -1,4 +1,5 @@
 import Image from "next/image";
+import AudioPlayer from "./components/AudioPlayer";
 import arenaPhoto from "@/public/photos/mongus-arena.jpeg";
 import closePhoto from "@/public/photos/mongus-guitar-close.jpeg";
 import purplePhoto from "@/public/photos/mongus-purple-stage.jpeg";
@@ -109,20 +110,18 @@ export default function Home() {
             />
             <span className="cover-top">MONGUS — 001</span>
             <span className="cover-letter">M</span>
-            <span className="cover-bottom">PRÓXIMO LANZAMIENTO</span>
+            <span className="cover-bottom">NUEVO ADELANTO</span>
           </div>
           <div className="release-info">
-            <p className="status"><span /> EN PROCESO</p>
-            <h3>Sin título,<br />por ahora.</h3>
+            <p className="status"><span /> DISPONIBLE AHORA</p>
+            <h3>BATTLE</h3>
             <p className="release-description">
-              El primer capítulo está tomando forma. Síguelo para escuchar antes que nadie.
+              Escucha el nuevo adelanto en exclusiva directamente desde el reproductor.
             </p>
+            <AudioPlayer src="/musica/BATTLE.mp3" title="BATTLE" />
             <div className="platforms" aria-label="Plataformas próximamente">
               <span>SPOTIFY</span><span>APPLE MUSIC</span><span>YOUTUBE</span>
             </div>
-            <button className="notify-button" type="button" disabled>
-              AVÍSAME CUANDO SALGA <span>→</span>
-            </button>
           </div>
         </div>
       </section>
