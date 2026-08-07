@@ -63,7 +63,7 @@ export default function Home() {
         </div>
         <div className="hero-noise" aria-hidden="true" />
         <div className="hero-copy">
-          <p className="eyebrow">ARTISTA · PRODUCTOR · CIUDAD DE MÉXICO</p>
+          <p className="eyebrow">ARTISTA · GUITARRISTA · PRODUCTOR · CIUDAD DE MÉXICO</p>
           <h1>
             MON<span>GUS</span>
           </h1>
