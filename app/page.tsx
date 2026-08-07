@@ -59,7 +59,7 @@ export default function Home() {
             fill
             preload
             placeholder="blur"
-            sizes="(max-width: 800px) 90vw, 49vw"
+            sizes="100vw"
           />
         </div>
         <div className="hero-noise" aria-hidden="true" />
