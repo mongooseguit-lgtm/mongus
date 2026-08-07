@@ -4,6 +4,7 @@ import arenaPhoto from "@/public/photos/mongus-arena.jpeg";
 import closePhoto from "@/public/photos/mongus-guitar-close.jpeg";
 import purplePhoto from "@/public/photos/mongus-purple-stage.jpeg";
 import lightsPhoto from "@/public/photos/mongus-stage-lights.jpeg";
+import newHeroPhoto from "@/public/photos/hero-new.png";
 import redPhoto from "@/public/photos/mongus-stage-red.jpeg";
 
 const journal = [
@@ -53,8 +54,8 @@ export default function Home() {
       <section className="hero" id="top">
         <div className="hero-photo">
           <Image
-            src={lightsPhoto}
-            alt="Mongus tocando guitarra bajo las luces del escenario"
+            src={newHeroPhoto}
+            alt="Mongus en vivo"
             fill
             preload
             placeholder="blur"
