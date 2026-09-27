@@ -20,6 +20,7 @@ export default function Footer() {
           <Link href="/musica">MÚSICA</Link>
           <Link href="/archivo">ARCHIVO</Link>
           <Link href="/diario">DIARIO</Link>
+          <Link href="/recursos">RECURSOS</Link>
         </div>
         <Link href="/">VOLVER AL INICIO ↑</Link>
       </div>

@@ -21,6 +21,9 @@ export default function Header() {
         <Link href="/diario" className={pathname === "/diario" ? "active" : ""}>
           Diario
         </Link>
+        <Link href="/recursos" className={pathname === "/recursos" ? "active" : ""}>
+          Recursos
+        </Link>
         <Link href="/contacto" className={pathname === "/contacto" ? "active" : ""}>
           Contacto
         </Link>
