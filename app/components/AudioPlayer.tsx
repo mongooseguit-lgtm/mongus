@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { useAudio, Track } from "../context/AudioContext";
 
 interface AudioPlayerProps {
   src: string;
@@ -18,82 +18,61 @@ export default function AudioPlayer({
   subtitle,
   thumbnail,
 }: AudioPlayerProps) {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const { currentTrack, isPlaying, currentTime, duration, playTrack, togglePlay, seek } = useAudio();
 
-  useEffect(() => {
-    const handlePauseOthers = (e: Event) => {
-      const customEvt = e as CustomEvent;
-      if (customEvt.detail !== src && audioRef.current && isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      }
-    };
-    window.addEventListener("pause-other-audio", handlePauseOthers);
-    return () => window.removeEventListener("pause-other-audio", handlePauseOthers);
-  }, [src, isPlaying]);
+  const isCurrentTrack = currentTrack?.src === src;
+  const isThisPlaying = isCurrentTrack && isPlaying;
 
-  const togglePlay = () => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
+  const trackData: Track = {
+    id: src,
+    src,
+    title,
+    trackNumber,
+    subtitle,
+    thumbnail,
+  };
+
+  const handleToggle = () => {
+    if (isCurrentTrack) {
+      togglePlay();
     } else {
-      window.dispatchEvent(new CustomEvent("pause-other-audio", { detail: src }));
-      audioRef.current.play();
-      setIsPlaying(true);
-    }
-  };
-
-  const handleTimeUpdate = () => {
-    if (audioRef.current) {
-      setCurrentTime(audioRef.current.currentTime);
-    }
-  };
-
-  const handleLoadedMetadata = () => {
-    if (audioRef.current) {
-      setDuration(audioRef.current.duration);
+      playTrack(trackData);
     }
   };
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const time = parseFloat(e.target.value);
-    setCurrentTime(time);
-    if (audioRef.current) {
-      audioRef.current.currentTime = time;
+    if (!isCurrentTrack) {
+      playTrack(trackData);
     }
+    seek(parseFloat(e.target.value));
   };
 
   const formatTime = (seconds: number) => {
-    if (isNaN(seconds) || seconds === 0) return "0:00";
+    if (isNaN(seconds) || seconds <= 0) return "0:00";
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
-  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
+  const displayCurrentTime = isCurrentTrack ? currentTime : 0;
+  const displayDuration = isCurrentTrack ? duration : 0;
+  const progressPercent = displayDuration > 0 ? (displayCurrentTime / displayDuration) * 100 : 0;
 
   return (
-    <div className={`audio-player-container ${isPlaying ? "is-playing" : ""}`}>
-      <audio
-        ref={audioRef}
-        src={src}
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleLoadedMetadata}
-        onEnded={() => setIsPlaying(false)}
-        preload="metadata"
-      />
-
+    <div className={`audio-player-container ${isThisPlaying ? "is-playing" : ""}`}>
       <div className="player-main-row">
         {thumbnail && (
           <div
             className="player-thumbnail"
-            onClick={togglePlay}
+            onClick={handleToggle}
             role="button"
             tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleToggle();
+              }
+            }}
             aria-label={`Reproducir ${title}`}
           >
             <Image
@@ -104,7 +83,7 @@ export default function AudioPlayer({
               className="player-thumb-img"
             />
             <div className="thumb-overlay">
-              <span className="thumb-play-icon">{isPlaying ? "❚❚" : "▶"}</span>
+              <span className="thumb-play-icon">{isThisPlaying ? "❚❚" : "▶"}</span>
             </div>
           </div>
         )}
@@ -119,18 +98,18 @@ export default function AudioPlayer({
           <div className="player-controls">
             <button
               className="play-button"
-              onClick={togglePlay}
+              onClick={handleToggle}
               type="button"
-              aria-label={isPlaying ? `Pausar ${title}` : `Reproducir ${title}`}
+              aria-label={isThisPlaying ? `Pausar ${title}` : `Reproducir ${title}`}
             >
-              <span className="play-icon">{isPlaying ? "❚❚" : "▶"}</span>
-              <span>{isPlaying ? "PAUSAR" : "ESCUCHAR"}</span>
+              <span className="play-icon">{isThisPlaying ? "❚❚" : "▶"}</span>
+              <span>{isThisPlaying ? "PAUSAR" : "ESCUCHAR"}</span>
             </button>
 
             <div className="time-display">
-              <span>{formatTime(currentTime)}</span>
+              <span>{formatTime(displayCurrentTime)}</span>
               <span className="time-separator">/</span>
-              <span>{formatTime(duration)}</span>
+              <span>{formatTime(displayDuration)}</span>
             </div>
           </div>
         </div>
@@ -140,8 +119,8 @@ export default function AudioPlayer({
         <input
           type="range"
           min="0"
-          max={duration || 100}
-          value={currentTime}
+          max={displayDuration || 100}
+          value={displayCurrentTime}
           onChange={handleSeek}
           className="progress-slider"
           aria-label={`Progreso de ${title}`}

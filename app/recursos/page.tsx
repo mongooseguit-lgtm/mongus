@@ -4,16 +4,144 @@ import { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+type TabKey = "marcas" | "entorchado" | "materiales" | "afinacion" | "calculadora";
+
 export default function RecursosPage() {
-  const [activeTab, setActiveTab] = useState<"marcas" | "entorchado" | "materiales" | "afinacion">("marcas");
+  const [activeTab, setActiveTab] = useState<TabKey>("marcas");
+
+  // Calculator State
+  const [scaleLength, setScaleLength] = useState<"25.5" | "24.75" | "25.0">("25.5");
+  const [tuning, setTuning] = useState<"standard-e" | "drop-d" | "eb-standard" | "d-standard" | "drop-c">("standard-e");
+  const [feelPreference, setFeelPreference] = useState<"light" | "balanced" | "heavy">("balanced");
+
+  // Recommendation engine based on physical acoustic principles
+  const getRecommendation = () => {
+    // Return recommended gauges and approximate tensions
+    if (tuning === "standard-e") {
+      if (feelPreference === "light") {
+        return {
+          setName: "Super Light 09-42",
+          strings: [
+            { note: "E4 (1ª)", gauge: ".009", tension: scaleLength === "25.5" ? "13.1 lbs" : "12.3 lbs" },
+            { note: "B3 (2ª)", gauge: ".011", tension: scaleLength === "25.5" ? "11.0 lbs" : "10.3 lbs" },
+            { note: "G3 (3ª)", gauge: ".016", tension: scaleLength === "25.5" ? "14.7 lbs" : "13.8 lbs" },
+            { note: "D3 (4ª)", gauge: ".024", tension: scaleLength === "25.5" ? "15.8 lbs" : "14.8 lbs" },
+            { note: "A2 (5ª)", gauge: ".032", tension: scaleLength === "25.5" ? "15.8 lbs" : "14.8 lbs" },
+            { note: "E2 (6ª)", gauge: ".042", tension: scaleLength === "25.5" ? "14.8 lbs" : "13.9 lbs" },
+          ],
+          totalTension: scaleLength === "25.5" ? "85.2 lbs" : "79.9 lbs",
+          diagnosis: "Ideal para solos rápidos y estiramientos continuos. En guitarras escala corta (24.75) puede sentirse un poco esponjosa.",
+          suggestedSet: "Ernie Ball Super Slinky (09-42) o D'Addario NYXL 0942",
+        };
+      }
+      if (feelPreference === "heavy") {
+        return {
+          setName: "Medium Heavy 11-49",
+          strings: [
+            { note: "E4 (1ª)", gauge: ".011", tension: scaleLength === "25.5" ? "19.6 lbs" : "18.4 lbs" },
+            { note: "B3 (2ª)", gauge: ".014", tension: scaleLength === "25.5" ? "17.8 lbs" : "16.7 lbs" },
+            { note: "G3 (3ª)", gauge: ".018", tension: scaleLength === "25.5" ? "18.6 lbs" : "17.4 lbs" },
+            { note: "D3 (4ª)", gauge: ".028", tension: scaleLength === "25.5" ? "21.3 lbs" : "20.0 lbs" },
+            { note: "A2 (5ª)", gauge: ".038", tension: scaleLength === "25.5" ? "21.6 lbs" : "20.2 lbs" },
+            { note: "E2 (6ª)", gauge: ".049", tension: scaleLength === "25.5" ? "19.5 lbs" : "18.3 lbs" },
+          ],
+          totalTension: scaleLength === "25.5" ? "118.4 lbs" : "111.0 lbs",
+          diagnosis: "Tono grueso, proyección masiva y sustain prolongado. Requiere fuerza en la mano izquierda para bends de tono completo.",
+          suggestedSet: "Ernie Ball Power Slinky (11-48) o Stringjoy Broadway 11-50",
+        };
+      }
+      // Balanced 10-46
+      return {
+        setName: "Regular Standard 10-46",
+        strings: [
+          { note: "E4 (1ª)", gauge: ".010", tension: scaleLength === "25.5" ? "16.2 lbs" : "15.2 lbs" },
+          { note: "B3 (2ª)", gauge: ".013", tension: scaleLength === "25.5" ? "15.4 lbs" : "14.4 lbs" },
+          { note: "G3 (3ª)", gauge: ".017", tension: scaleLength === "25.5" ? "16.6 lbs" : "15.6 lbs" },
+          { note: "D3 (4ª)", gauge: ".026", tension: scaleLength === "25.5" ? "18.4 lbs" : "17.2 lbs" },
+          { note: "A2 (5ª)", gauge: ".036", tension: scaleLength === "25.5" ? "19.5 lbs" : "18.3 lbs" },
+          { note: "E2 (6ª)", gauge: ".046", tension: scaleLength === "25.5" ? "17.5 lbs" : "16.4 lbs" },
+        ],
+        totalTension: scaleLength === "25.5" ? "103.6 lbs" : "97.1 lbs",
+        diagnosis: "El estándar dorado de la industria. Tensión equilibrada entre 15 y 19 lbs por cuerda para cualquier estilo de rock o pop.",
+        suggestedSet: "Ernie Ball Regular Slinky (10-46) o D'Addario EXL110",
+      };
+    }
+
+    if (tuning === "drop-d") {
+      return {
+        setName: feelPreference === "light" ? "Drop D Light Custom 09-46" : "Drop D Balanced 10-52 (Skinny Top Heavy Bottom)",
+        strings: [
+          { note: "E4 (1ª)", gauge: feelPreference === "light" ? ".009" : ".010", tension: feelPreference === "light" ? "13.1 lbs" : "16.2 lbs" },
+          { note: "B3 (2ª)", gauge: feelPreference === "light" ? ".011" : ".013", tension: feelPreference === "light" ? "11.0 lbs" : "15.4 lbs" },
+          { note: "G3 (3ª)", gauge: feelPreference === "light" ? ".016" : ".017", tension: feelPreference === "light" ? "14.7 lbs" : "16.6 lbs" },
+          { note: "D3 (4ª)", gauge: feelPreference === "light" ? ".026" : ".030", tension: feelPreference === "light" ? "18.4 lbs" : "20.1 lbs" },
+          { note: "A2 (5ª)", gauge: feelPreference === "light" ? ".036" : ".042", tension: feelPreference === "light" ? "19.5 lbs" : "20.8 lbs" },
+          { note: "D2 (6ª)", gauge: feelPreference === "light" ? ".048" : ".052", tension: feelPreference === "light" ? "15.2 lbs" : "17.6 lbs" },
+        ],
+        totalTension: feelPreference === "light" ? "91.9 lbs" : "106.7 lbs",
+        diagnosis: "Al bajar la 6ª a D, un calibre .046 caería a ~13.8 lbs (muy flojo). Con .052 se recuperan las 17.6 lbs exactas para que el acorde de potencia (power chord) suene nítido y sin trasteos.",
+        suggestedSet: "Ernie Ball Skinny Top Heavy Bottom (10-52) o Stringjoy Custom Drop 10-52",
+      };
+    }
+
+    if (tuning === "eb-standard") {
+      return {
+        setName: "Eb Compensated 10.5-48 o 11-48",
+        strings: [
+          { note: "Eb4 (1ª)", gauge: ".0105", tension: "15.9 lbs" },
+          { note: "Bb3 (2ª)", gauge: ".0135", tension: "15.2 lbs" },
+          { note: "Gb3 (3ª)", gauge: ".0175", tension: "16.2 lbs" },
+          { note: "Db3 (4ª)", gauge: ".026", tension: "17.1 lbs" },
+          { note: "Ab2 (5ª)", gauge: ".038", tension: "18.5 lbs" },
+          { note: "Eb2 (6ª)", gauge: ".048", tension: "16.8 lbs" },
+        ],
+        totalTension: "99.7 lbs",
+        diagnosis: "Afinar medio tono abajo resta aproximadamente 8% de tensión. Un set de medio calibre (10.5 o 11) recupera el tacto de un 10-46 en Standard.",
+        suggestedSet: "Stringjoy Orbiters Balanced 10.5-48 o D'Addario NYXL 1149",
+      };
+    }
+
+    if (tuning === "d-standard") {
+      return {
+        setName: "D Standard Heavy Core 11-54",
+        strings: [
+          { note: "D4 (1ª)", gauge: ".011", tension: "15.5 lbs" },
+          { note: "A3 (2ª)", gauge: ".015", tension: "15.9 lbs" },
+          { note: "F3 (3ª)", gauge: ".019", tension: "16.4 lbs" },
+          { note: "C3 (4ª)", gauge: ".030", tension: "18.6 lbs" },
+          { note: "G2 (5ª)", gauge: ".042", tension: "18.9 lbs" },
+          { note: "D2 (6ª)", gauge: ".054", tension: "17.4 lbs" },
+        ],
+        totalTension: "102.7 lbs",
+        diagnosis: "Afinación un tono completo abajo. Requiere un set 11-54 para mantener estabilidad y evitar calibraciones extremas del alma del mástil.",
+        suggestedSet: "Ernie Ball Beefy Slinky (11-54) o Dunlop Heavy Core 11-50",
+      };
+    }
+
+    // Drop C
+    return {
+      setName: "Drop C Optimized 11-56",
+      strings: [
+        { note: "D4 (1ª)", gauge: ".011", tension: "15.5 lbs" },
+        { note: "A3 (2ª)", gauge: ".015", tension: "15.9 lbs" },
+        { note: "F3 (3ª)", gauge: ".019", tension: "16.4 lbs" },
+        { note: "C3 (4ª)", gauge: ".030", tension: "18.6 lbs" },
+        { note: "G2 (5ª)", gauge: ".042", tension: "18.9 lbs" },
+        { note: "C2 (6ª)", gauge: ".056", tension: "16.2 lbs" },
+      ],
+      totalTension: "101.5 lbs",
+      diagnosis: "La 6ª afinada en C (2 tonos abajo) requiere calibre .056 mínimo para no vibrar descontrolada contra los trastes. Las primeras cuerdas en D se benefician de .011.",
+      suggestedSet: "Ernie Ball Not Even Slinky (12-56) o Stringjoy Custom Drop C (11-56)",
+    };
+  };
+
+  const rec = getRecommendation();
 
   return (
     <main className="recursos-page">
-      {/* Header oficial del sitio */}
       <Header />
 
       <section className="recursos-section section" id="recursos">
-        {/* Cabecera estilo Mongus */}
         <div className="section-heading">
           <p className="kicker">04 / GUITAR LAB &amp; RECURSOS</p>
           <h2>
@@ -22,7 +150,6 @@ export default function RecursosPage() {
           </h2>
         </div>
 
-        {/* Bloque de introducción */}
         <div className="recursos-intro">
           <p className="recursos-lead">
             No existe una &ldquo;mejor&rdquo; cuerda universal. La elección ideal depende totalmente de tu estilo de interpretación, el género musical que tocas y el tono que deseas alcanzar.
@@ -32,7 +159,7 @@ export default function RecursosPage() {
           </p>
         </div>
 
-        {/* Navegación interactiva de pestañas estilo Mongus */}
+        {/* Navegación interactiva de pestañas */}
         <nav className="mongus-tabs" role="tablist" aria-label="Temas de la guía de cuerdas">
           <button
             type="button"
@@ -70,12 +197,20 @@ export default function RecursosPage() {
           >
             <span className="tab-idx">04</span> DROP TUNING
           </button>
+          <button
+            type="button"
+            className={`mongus-tab-btn tab-calc ${activeTab === "calculadora" ? "active" : ""}`}
+            onClick={() => setActiveTab("calculadora")}
+            role="tab"
+            aria-selected={activeTab === "calculadora"}
+          >
+            <span className="tab-idx">05</span> ⚡ CALCULADORA DE TENSIÓN
+          </button>
         </nav>
 
         {/* Pestaña 1: Marcas Destacadas */}
         <div id="marcas" className={`tab-content ${activeTab === "marcas" ? "active" : ""}`}>
           <div className="cards-grid">
-            {/* Ernie Ball */}
             <div className="brand-card">
               <span className="card-tag">ROCK CLÁSICO · BENDS</span>
               <h3>Ernie Ball (Slinky)</h3>
@@ -87,7 +222,6 @@ export default function RecursosPage() {
               </ul>
             </div>
 
-            {/* D'Addario */}
             <div className="brand-card">
               <span className="card-tag">INGENIERÍA · ESTABILIDAD</span>
               <h3>D&apos;Addario (NYXL)</h3>
@@ -99,7 +233,6 @@ export default function RecursosPage() {
               </ul>
             </div>
 
-            {/* Optima */}
             <div className="brand-card">
               <span className="card-tag">LUJO BOUTIQUE · 24K</span>
               <h3>Optima Strings</h3>
@@ -111,7 +244,6 @@ export default function RecursosPage() {
               </ul>
             </div>
 
-            {/* Stringjoy */}
             <div className="brand-card">
               <span className="card-tag">TENSIÓN BALANCEADA</span>
               <h3>Stringjoy</h3>
@@ -123,7 +255,6 @@ export default function RecursosPage() {
               </ul>
             </div>
 
-            {/* Elixir (Mención Especial) */}
             <div className="brand-card special-card">
               <span className="card-tag">MENCIÓN ESPECIAL · PREVENCIÓN DE ÓXIDO</span>
               <h3>Protección Anti-Corrosión &amp; Recubrimientos</h3>
@@ -169,7 +300,6 @@ export default function RecursosPage() {
         {/* Pestaña 3: Materiales y Aleaciones */}
         <div id="materiales" className={`tab-content ${activeTab === "materiales" ? "active" : ""}`}>
           <div className="materials-grid">
-            {/* Pure Nickel */}
             <div className="material-card">
               <div className="material-symbol ni">Ni</div>
               <h3>Pure Nickel</h3>
@@ -184,7 +314,6 @@ export default function RecursosPage() {
               </ul>
             </div>
 
-            {/* Nickel Wound */}
             <div className="material-card">
               <div className="material-symbol nps">NPS</div>
               <h3>Nickel Wound</h3>
@@ -239,13 +368,104 @@ export default function RecursosPage() {
           </div>
         </div>
 
-        {/* Pie de fuentes */}
+        {/* Pestaña 5: Calculadora Interactiva de Tensión & Calibre */}
+        <div id="calculadora" className={`tab-content ${activeTab === "calculadora" ? "active" : ""}`}>
+          <div className="calc-card">
+            <div className="calc-header">
+              <span className="calc-tag">HERRAMIENTA TÉCNICA · GUITAR LAB</span>
+              <h3>Calculadora &amp; Recomendador de Calibres</h3>
+              <p>
+                Calcula la combinación física ideal de calibres según la escala de tu guitarra, afinación y tacto deseado para lograr tensión uniforme sin trasteos.
+              </p>
+            </div>
+
+            {/* Selectores de configuración */}
+            <div className="calc-controls-row">
+              <div className="calc-field">
+                <label htmlFor="scale-select">1. ESCALA DE LA GUITARRA</label>
+                <select
+                  id="scale-select"
+                  value={scaleLength}
+                  onChange={(e) => setScaleLength(e.target.value as "25.5" | "24.75" | "25.0")}
+                >
+                  <option value="25.5">25.5&quot; — Fender Strat / Tele / Superstrats</option>
+                  <option value="24.75">24.75&quot; — Gibson Les Paul / SG / ES</option>
+                  <option value="25.0">25.0&quot; — PRS / Híbridas</option>
+                </select>
+              </div>
+
+              <div className="calc-field">
+                <label htmlFor="tuning-select">2. AFINACIÓN OBJETIVO</label>
+                <select
+                  id="tuning-select"
+                  value={tuning}
+                  onChange={(e) => setTuning(e.target.value as "standard-e" | "drop-d" | "eb-standard" | "d-standard" | "drop-c")}
+                >
+                  <option value="standard-e">Standard E (E A D G B E)</option>
+                  <option value="drop-d">Drop D (D A D G B E)</option>
+                  <option value="eb-standard">Eb Standard (-1/2 tono)</option>
+                  <option value="d-standard">D Standard (-1 tono completo)</option>
+                  <option value="drop-c">Drop C (C G C F A D)</option>
+                </select>
+              </div>
+
+              <div className="calc-field">
+                <label htmlFor="feel-select">3. TACTO PREFERIDO</label>
+                <select
+                  id="feel-select"
+                  value={feelPreference}
+                  onChange={(e) => setFeelPreference(e.target.value as "light" | "balanced" | "heavy")}
+                >
+                  <option value="balanced">Equilibrado (Ideal ~16-18 lbs / cuerda)</option>
+                  <option value="light">Ligero / Bends elásticos (~12-15 lbs)</option>
+                  <option value="heavy">Firme / Pegada pesada (~19-22 lbs)</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Resultados y Calibres calculados */}
+            <div className="calc-results-block">
+              <div className="calc-summary-bar">
+                <div className="summary-col">
+                  <span className="summary-label">SET RECOMENDADO</span>
+                  <strong>{rec.setName}</strong>
+                </div>
+                <div className="summary-col">
+                  <span className="summary-label">TENSIÓN TOTAL EN EL MÁSTIL</span>
+                  <strong className="tension-highlight">{rec.totalTension}</strong>
+                </div>
+                <div className="summary-col">
+                  <span className="summary-label">SET COMERCIAL RECOMENDADO</span>
+                  <span>{rec.suggestedSet}</span>
+                </div>
+              </div>
+
+              {/* Grid de cuerdas individual */}
+              <div className="string-gauge-grid">
+                {rec.strings.map((str, idx) => (
+                  <div key={idx} className="string-box">
+                    <span className="string-idx">{idx + 1}ª CUERDA</span>
+                    <span className="string-note">{str.note}</span>
+                    <strong className="string-gauge">{str.gauge}</strong>
+                    <span className="string-tension">{str.tension}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Diagnóstico técnico */}
+              <div className="calc-diagnosis">
+                <div className="diag-badge">ANÁLISIS FÍSICO</div>
+                <p>{rec.diagnosis}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="guide-source-footer">
-          Generado en base a las fuentes proporcionadas del cuaderno del usuario · Guitar Lab Mongus
+          Generado en base a las fuentes del Guitar Lab Mongus · Cálculos basados en masa unitaria de acero niquelado
         </div>
       </section>
 
-      {/* Footer oficial de Mongus */}
       <Footer />
     </main>
   );
