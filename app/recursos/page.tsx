@@ -8,321 +8,261 @@ export default function RecursosPage() {
   const [activeTab, setActiveTab] = useState<"marcas" | "entorchado" | "materiales" | "afinacion">("marcas");
 
   return (
-    <main className="recursos-page">
+    <div className="min-h-screen flex flex-col bg-slate-900 text-slate-50 antialiased font-sans">
+      <style>{`
+        .tab-btn.active {
+          border-bottom: 2px solid #fbbf24;
+          color: #fbbf24;
+          font-weight: 600;
+        }
+        .tab-content {
+          display: none;
+          animation: fadeIn 0.3s ease-in-out;
+        }
+        .tab-content.active {
+          display: block;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(5px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+
+      {/* Main site header navigation */}
       <Header />
 
-      <section className="section recursos-hero">
-        <div className="section-heading">
-          <p className="kicker">05 / GUITAR LAB & RECURSOS</p>
-          <h2>
-            La búsqueda del<br />
-            <em>tono perfecto.</em>
+      {/* Guitar Guide Header */}
+      <header className="bg-slate-800 shadow-md border-b border-slate-700 sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-4 py-6">
+          <h1 className="text-3xl md:text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500">
+            La Búsqueda del Tono Perfecto
+          </h1>
+          <p className="text-center text-slate-400 mt-2 text-sm md:text-base">
+            Basado en fuentes expertas: Producer Hive, Stringjoy, Peach Guitars, Optima y más.
+          </p>
+        </div>
+      </header>
+
+      {/* Main Content Area */}
+      <main className="flex-grow max-w-6xl mx-auto px-4 py-8 w-full">
+        <section className="mb-10 text-center max-w-3xl mx-auto">
+          <h2 className="text-2xl font-semibold mb-4 text-slate-200">
+            No existe una &ldquo;mejor&rdquo; cuerda universal
           </h2>
-        </div>
-
-        <div className="recursos-intro">
-          <div className="recursos-intro-badge">
-            <span>GUÍA DE CUERDAS</span>
-            <i>✦</i>
-            <span>GUITAR LAB</span>
-            <i>✦</i>
-            <span>MONGUS TIPS</span>
-          </div>
-          <p className="recursos-intro-text">
-            No existe una &ldquo;mejor&rdquo; cuerda universal. La elección ideal depende de tu ataque,
-            la escala de tu guitarra, las afinaciones que uses y el carácter que buscas proyectar.
-            Aquí tienes los fundamentos clave de la industria condensados para músicos exigentes.
+          <p className="text-slate-400 leading-relaxed">
+            La elección de la cuerda ideal depende completamente de tu estilo de interpretación, el género musical que tocas y el tono que deseas alcanzar. A continuación, explora las diferencias fundamentales extraídas de los expertos de la industria.
           </p>
-          <p className="recursos-sources">
-            Fuentes especializadas: Producer Hive · Stringjoy · Peach Guitars · Optima Strings
-          </p>
-        </div>
+        </section>
 
-        {/* Tab Navigation */}
-        <div className="recursos-nav" role="tablist" aria-label="Temas de la guía">
+        {/* Tab Buttons */}
+        <nav className="flex flex-wrap justify-center mb-8 border-b border-slate-700" aria-label="Pestañas de la guía">
           <button
-            className={`recursos-tab-btn ${activeTab === "marcas" ? "active" : ""}`}
+            type="button"
+            className={`tab-btn px-4 py-3 text-slate-400 hover:text-amber-300 transition-colors focus:outline-none ${
+              activeTab === "marcas" ? "active" : ""
+            }`}
             onClick={() => setActiveTab("marcas")}
-            type="button"
-            role="tab"
-            aria-selected={activeTab === "marcas"}
           >
-            <span>01</span> MARCAS DESTACADAS
+            Marcas Destacadas
           </button>
           <button
-            className={`recursos-tab-btn ${activeTab === "entorchado" ? "active" : ""}`}
+            type="button"
+            className={`tab-btn px-4 py-3 text-slate-400 hover:text-amber-300 transition-colors focus:outline-none ${
+              activeTab === "entorchado" ? "active" : ""
+            }`}
             onClick={() => setActiveTab("entorchado")}
-            type="button"
-            role="tab"
-            aria-selected={activeTab === "entorchado"}
           >
-            <span>02</span> ROUNDWOUND VS FLATWOUND
+            Roundwound vs Flatwound
           </button>
           <button
-            className={`recursos-tab-btn ${activeTab === "materiales" ? "active" : ""}`}
+            type="button"
+            className={`tab-btn px-4 py-3 text-slate-400 hover:text-amber-300 transition-colors focus:outline-none ${
+              activeTab === "materiales" ? "active" : ""
+            }`}
             onClick={() => setActiveTab("materiales")}
-            type="button"
-            role="tab"
-            aria-selected={activeTab === "materiales"}
           >
-            <span>03</span> MATERIALES Y ALEACIONES
+            Materiales y Aleaciones
           </button>
           <button
-            className={`recursos-tab-btn ${activeTab === "afinacion" ? "active" : ""}`}
-            onClick={() => setActiveTab("afinacion")}
             type="button"
-            role="tab"
-            aria-selected={activeTab === "afinacion"}
+            className={`tab-btn px-4 py-3 text-slate-400 hover:text-amber-300 transition-colors focus:outline-none ${
+              activeTab === "afinacion" ? "active" : ""
+            }`}
+            onClick={() => setActiveTab("afinacion")}
           >
-            <span>04</span> DROP TUNING & TENSIÓN
+            Drop Tuning
           </button>
+        </nav>
+
+        {/* Tab: Marcas */}
+        <div id="marcas" className={`tab-content ${activeTab === "marcas" ? "active" : ""}`}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Ernie Ball */}
+            <div className="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg hover:border-amber-500/50 transition-colors">
+              <h3 className="text-xl font-bold text-amber-400 mb-2">Ernie Ball (Slinky)</h3>
+              <p className="text-slate-300 text-sm mb-4">La opción clásica del Rock &amp; Roll.</p>
+              <ul className="text-slate-400 text-sm space-y-2 list-disc list-inside">
+                <li><strong>Tono:</strong> Icónico, balanceado.</li>
+                <li><strong>Tacto:</strong> Tensión ligera, ideal para bends (estiramientos) sin esfuerzo.</li>
+                <li><strong>Uso:</strong> Versatilidad extrema, preferidas por principiantes y pros por igual.</li>
+              </ul>
+            </div>
+
+            {/* D'Addario */}
+            <div className="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg hover:border-amber-500/50 transition-colors">
+              <h3 className="text-xl font-bold text-amber-400 mb-2">D&apos;Addario (Serie NYXL)</h3>
+              <p className="text-slate-300 text-sm mb-4">Ingeniería moderna para mayor resistencia.</p>
+              <ul className="text-slate-400 text-sm space-y-2 list-disc list-inside">
+                <li><strong>Tono:</strong> Sonido audaz, con mucha pegada (punchy) y articulado.</li>
+                <li><strong>Rendimiento:</strong> Mayor estabilidad de afinación y fuerza superior contra roturas.</li>
+                <li><strong>Uso:</strong> Músicos que tocan con fuerza o usan trémolos constantemente.</li>
+              </ul>
+            </div>
+
+            {/* Optima */}
+            <div className="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg hover:border-amber-500/50 transition-colors">
+              <h3 className="text-xl font-bold text-amber-400 mb-2">Optima Strings</h3>
+              <p className="text-slate-300 text-sm mb-4">Artesanía alemana y lujo.</p>
+              <ul className="text-slate-400 text-sm space-y-2 list-disc list-inside">
+                <li><strong>Destacado:</strong> Cuerdas recubiertas en Oro de 24K.</li>
+                <li><strong>Durabilidad:</strong> Altamente resistentes al óxido y deslustre gracias al revestimiento premium.</li>
+                <li><strong>Uso:</strong> Músicos que buscan calidad boutique y larga vida útil.</li>
+              </ul>
+            </div>
+
+            {/* Stringjoy */}
+            <div className="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg hover:border-amber-500/50 transition-colors">
+              <h3 className="text-xl font-bold text-amber-400 mb-2">Stringjoy</h3>
+              <p className="text-slate-300 text-sm mb-4">Sets personalizados y equilibrados.</p>
+              <ul className="text-slate-400 text-sm space-y-2 list-disc list-inside">
+                <li><strong>Tono:</strong> Claro, resonante y de larga duración (series Orbiters y Broadways).</li>
+                <li><strong>Innovación:</strong> Ofrecen tensión matemáticamente balanceada a través del diapasón.</li>
+                <li><strong>Uso:</strong> Afinaciones alternativas y músicos que buscan calibración precisa.</li>
+              </ul>
+            </div>
+
+            {/* Elixir (Mención) */}
+            <div className="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg hover:border-amber-500/50 transition-colors lg:col-span-2">
+              <h3 className="text-xl font-bold text-amber-400 mb-2">Mención Especial: Prevención de Óxido</h3>
+              <p className="text-slate-300 text-sm">
+                Las cuerdas tienden a deslustrarse y oxidarse por el sudor y los factores ambientales. Si buscas evitar esto y ahorrar a largo plazo, busca marcas conocidas por sus <strong>recubrimientos (coated strings)</strong> como Elixir o las <em>Orbiters</em> de Stringjoy, que protegen la cuerda prolongando su vida útil sin sacrificar demasiado el brillo original.
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* Tab Content: Marcas */}
-        {activeTab === "marcas" && (
-          <div className="recursos-panel">
-            <div className="recursos-grid">
-              <div className="gear-card">
-                <div className="gear-card-header">
-                  <span className="gear-tag">ROCK CLÁSICO · BENDS</span>
-                  <span className="gear-num">01</span>
-                </div>
-                <h3>ERNIE BALL (SLINKY)</h3>
-                <p className="gear-desc">El estándar histórico del rock & roll mundial.</p>
-                <ul className="gear-specs">
-                  <li><strong>Tono:</strong> Icónico, balanceado y abierto.</li>
-                  <li><strong>Tacto:</strong> Tensión ligera, ideal para bends elásticos sin esfuerzo.</li>
-                  <li><strong>Uso:</strong> Máxima versatilidad para solos expresivos en estudio y vivo.</li>
+        {/* Tab: Entorchado */}
+        <div id="entorchado" className={`tab-content ${activeTab === "entorchado" ? "active" : ""}`}>
+          <div className="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-lg mb-6">
+            <h3 className="text-2xl font-bold text-amber-400 mb-4 text-center">La Batalla del Entorchado</h3>
+            <p className="text-slate-300 text-center mb-8">La forma en que el alambre exterior envuelve al núcleo afecta drásticamente el sonido y el tacto de la guitarra.</p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-slate-900 p-5 rounded-lg border-l-4 border-amber-500">
+                <h4 className="text-lg font-bold text-slate-100 mb-2">Roundwound (Entorchado Redondo)</h4>
+                <p className="text-slate-400 text-sm mb-3">Tienen un núcleo de acero al carbono con un alambre cilíndrico envuelto apretadamente, formando pequeñas crestas.</p>
+                <ul className="text-sm text-slate-300 space-y-2">
+                  <li><span className="text-green-400 font-bold">✓</span> <strong>Sonido:</strong> Más sustain, brillo superior (top-end zing).</li>
+                  <li><span className="text-green-400 font-bold">✓</span> <strong>Géneros:</strong> Rock, Metal, Pop, uso general.</li>
+                  <li><span className="text-red-400 font-bold">✗</span> <strong>Desventaja:</strong> Producen más ruido al deslizar los dedos y desgastan más rápido los trastes.</li>
                 </ul>
               </div>
 
-              <div className="gear-card">
-                <div className="gear-card-header">
-                  <span className="gear-tag">ALTA RESISTENCIA · MODERN</span>
-                  <span className="gear-num">02</span>
-                </div>
-                <h3>D&apos;ADDARIO (SERIE NYXL)</h3>
-                <p className="gear-desc">Ingeniería de alta tensión y aleación de carbono.</p>
-                <ul className="gear-specs">
-                  <li><strong>Tono:</strong> Mordaz, con mucha pegada (*punchy*) y rango medio articulado.</li>
-                  <li><strong>Rendimiento:</strong> Extraordinaria estabilidad de afinación y resistencia anti-rotura.</li>
-                  <li><strong>Uso:</strong> Músicos con ataque pesado o uso intenso de trémolo/whammy.</li>
+              <div className="bg-slate-900 p-5 rounded-lg border-l-4 border-blue-500">
+                <h4 className="text-lg font-bold text-slate-100 mb-2">Flatwound (Entorchado Plano)</h4>
+                <p className="text-slate-400 text-sm mb-3">El alambre exterior es una cinta plana (ribbon wire), lo que deja una superficie completamente lisa.</p>
+                <ul className="text-sm text-slate-300 space-y-2">
+                  <li><span className="text-green-400 font-bold">✓</span> <strong>Sonido:</strong> Muy cálido, oscuro, &ldquo;mellow&rdquo; y limpio.</li>
+                  <li><span className="text-green-400 font-bold">✓</span> <strong>Géneros:</strong> Jazz, R&amp;B, Black Gospel, Rock clásico en bajos.</li>
+                  <li><span className="text-green-400 font-bold">✓</span> <strong>Ventaja:</strong> Casi nulo ruido de dedos; prolongan la vida de los trastes.</li>
                 </ul>
               </div>
-
-              <div className="gear-card">
-                <div className="gear-card-header">
-                  <span className="gear-tag">LUJO · ALEMANIA</span>
-                  <span className="gear-num">03</span>
-                </div>
-                <h3>OPTIMA STRINGS</h3>
-                <p className="gear-desc">Artesanía alemana de precisión con recubrimiento en Oro 24K.</p>
-                <ul className="gear-specs">
-                  <li><strong>Destacado:</strong> Bañadas en oro auténtico de 24 quilates.</li>
-                  <li><strong>Durabilidad:</strong> Inmunidad prácticamente total a la corrosión por sudor.</li>
-                  <li><strong>Uso:</strong> Calidad boutique y respuesta sonora cálida de larga vida.</li>
-                </ul>
-              </div>
-
-              <div className="gear-card">
-                <div className="gear-card-header">
-                  <span className="gear-tag">CUSTOM BALANCED · BOUTIQUE</span>
-                  <span className="gear-num">04</span>
-                </div>
-                <h3>STRINGJOY</h3>
-                <p className="gear-desc">Sets con tensión matemáticamente balanceada cuerda por cuerda.</p>
-                <ul className="gear-specs">
-                  <li><strong>Tono:</strong> Claro, resonante y uniforme a lo largo del diapasón.</li>
-                  <li><strong>Innovación:</strong> Elimina cuerdas flojas armando calibres personalizados.</li>
-                  <li><strong>Uso:</strong> Afinaciones no convencionales y calibración precisa.</li>
-                </ul>
-              </div>
-
-              <div className="gear-card full-width-card">
-                <div className="gear-card-header">
-                  <span className="gear-tag highlight">PRO TIP ANTI-ÓXIDO</span>
-                  <span className="gear-num">05</span>
-                </div>
-                <h3>RECUBRIMIENTO (COATED STRINGS)</h3>
-                <p className="gear-desc">
-                  El sudor, la grasa de los dedos y la humedad desgastan y apagan las cuerdas rápidamente.
-                  Marcas como <strong>Elixir (Nanoweb)</strong> o las series recubiertas de <strong>Stringjoy (Orbiters)</strong> aplican
-                  una micro-película polimérica que sella el entorchado, multiplicando la vida útil por 3 sin perder el ataque.
-                </p>
-              </div>
             </div>
           </div>
-        )}
+        </div>
 
-        {/* Tab Content: Entorchado */}
-        {activeTab === "entorchado" && (
-          <div className="recursos-panel">
-            <div className="comparison-banner">
-              <h3>LA BATALLA DEL ENTORCHADO</h3>
-              <p>El perfil del alambre exterior transforma por completo la textura, fricción y respuesta armónica.</p>
+        {/* Tab: Materiales */}
+        <div id="materiales" className={`tab-content ${activeTab === "materiales" ? "active" : ""}`}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-slate-800 rounded-xl p-8 border border-slate-700 shadow-lg text-center">
+              <div className="w-16 h-16 mx-auto bg-slate-700 rounded-full flex items-center justify-center mb-4 border-2 border-amber-400">
+                <span className="text-2xl font-bold text-amber-400">Ni</span>
+              </div>
+              <h3 className="text-2xl font-bold text-slate-100 mb-2">Pure Nickel</h3>
+              <p className="text-amber-400 text-sm mb-4 font-semibold">Níquel Puro</p>
+              <p className="text-slate-400 text-sm leading-relaxed text-left mb-4">
+                El alambre envolvente está hecho enteramente de níquel. Eran el estándar en los años 50 y 60.
+              </p>
+              <ul className="text-sm text-slate-300 space-y-2 text-left bg-slate-900 p-4 rounded">
+                <li>🎸 <strong>Tono:</strong> &ldquo;Mojo&rdquo; vintage, cálido, profundo.</li>
+                <li>🎵 <strong>Estilos:</strong> Blues, Jazz, Classic Rock.</li>
+                <li>📉 <strong>Ataque:</strong> Más suave, con menos volumen general y presencia aguda.</li>
+              </ul>
             </div>
 
-            <div className="versus-grid">
-              <div className="versus-card roundwound">
-                <div className="versus-header">
-                  <span className="versus-badge">ESTÁNDAR</span>
-                  <h4>ROUNDWOUND</h4>
-                  <p>Alambre cilíndrico redondo tradicional</p>
-                </div>
-                <div className="versus-body">
-                  <div className="versus-point">
-                    <span className="icon-plus">✦</span>
-                    <div>
-                      <strong>Ataque Brillante & Sustain:</strong>
-                      <p>Mayor contenido armónico y el característico &ldquo;zing&rdquo; en agudos.</p>
-                    </div>
-                  </div>
-                  <div className="versus-point">
-                    <span className="icon-plus">✦</span>
-                    <div>
-                      <strong>Géneros Predilectos:</strong>
-                      <p>Rock, Hard Rock, Metal, Pop contemporáneo y solos con distorsión.</p>
-                    </div>
-                  </div>
-                  <div className="versus-point warning">
-                    <span className="icon-minus">✕</span>
-                    <div>
-                      <strong>Ruido de fricción:</strong>
-                      <p>Mayor ruido al deslizar dedos (*finger squeak*) y mayor fricción sobre los trastes.</p>
-                    </div>
-                  </div>
-                </div>
+            <div className="bg-slate-800 rounded-xl p-8 border border-slate-700 shadow-lg text-center">
+              <div className="w-16 h-16 mx-auto bg-slate-700 rounded-full flex items-center justify-center mb-4 border-2 border-blue-400">
+                <span className="text-2xl font-bold text-blue-400">NPS</span>
               </div>
-
-              <div className="versus-card flatwound">
-                <div className="versus-header">
-                  <span className="versus-badge alt">CINTA PLANA</span>
-                  <h4>FLATWOUND</h4>
-                  <p>Alambre de cinta pulida sin ranuras</p>
-                </div>
-                <div className="versus-body">
-                  <div className="versus-point">
-                    <span className="icon-plus">✦</span>
-                    <div>
-                      <strong>Tono Oscuro & Sedoso (*Mellow*):</strong>
-                      <p>Fundamental redonda, graves controlados y atenuación de frecuencias chillantes.</p>
-                    </div>
-                  </div>
-                  <div className="versus-point">
-                    <span className="icon-plus">✦</span>
-                    <div>
-                      <strong>Géneros Predilectos:</strong>
-                      <p>Jazz, R&B clásico, Soul, Motown y bajo eléctrico vintage.</p>
-                    </div>
-                  </div>
-                  <div className="versus-point">
-                    <span className="icon-plus">✦</span>
-                    <div>
-                      <strong>Tacto Suave:</strong>
-                      <p>Deslizamiento 100% silencioso y mínimo desgaste en trastes y diapasón.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <h3 className="text-2xl font-bold text-slate-100 mb-2">Nickel Wound</h3>
+              <p className="text-blue-400 text-sm mb-4 font-semibold">Acero Niquelado (Nickel-Plated Steel)</p>
+              <p className="text-slate-400 text-sm leading-relaxed text-left mb-4">
+                El alambre está compuesto por un ~8% de níquel y un ~92% de acero. Es el estándar moderno.
+              </p>
+              <ul className="text-sm text-slate-300 space-y-2 text-left bg-slate-900 p-4 rounded">
+                <li>🎸 <strong>Tono:</strong> Brillante, mordaz, corta bien en la mezcla.</li>
+                <li>🎵 <strong>Estilos:</strong> Rock moderno, Metal, Pop, Country.</li>
+                <li>📈 <strong>Ataque:</strong> Rápido, con gran presencia y mayor reactividad magnética (más salida en las pastillas).</li>
+              </ul>
             </div>
           </div>
-        )}
+        </div>
 
-        {/* Tab Content: Materiales */}
-        {activeTab === "materiales" && (
-          <div className="recursos-panel">
-            <div className="materials-grid">
-              <div className="material-card">
-                <div className="element-symbol">Ni</div>
-                <span className="material-kicker">ALEACIÓN CLÁSICA 50s & 60s</span>
-                <h3>PURE NICKEL</h3>
-                <p className="material-subtitle">Níquel Puro al 100%</p>
-                <p className="material-text">
-                  El entorchado está hecho totalmente de níquel. Era la norma en la era dorada del blues y rock clásico antes de que la industria se volcara al acero.
-                </p>
-                <div className="spec-table">
-                  <div className="spec-row">
-                    <span>CARÁCTER:</span>
-                    <strong>Cálido, vintage, medios suaves</strong>
-                  </div>
-                  <div className="spec-row">
-                    <span>ATAQUE:</span>
-                    <strong>Menos agresivo, compresión natural</strong>
-                  </div>
-                  <div className="spec-row">
-                    <span>IDEAL PARA:</span>
-                    <strong>Blues, Classic Rock, Jazz, amplificadores valvulares brillantes</strong>
-                  </div>
-                </div>
-              </div>
+        {/* Tab: Afinación */}
+        <div id="afinacion" className={`tab-content ${activeTab === "afinacion" ? "active" : ""}`}>
+          <div className="bg-slate-800 rounded-xl p-8 border border-slate-700 shadow-lg relative overflow-hidden">
+            {/* Abstract decorative element */}
+            <div className="absolute -right-10 -top-10 w-40 h-40 bg-amber-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 pointer-events-none"></div>
 
-              <div className="material-card">
-                <div className="element-symbol alt">NPS</div>
-                <span className="material-kicker">EL ESTÁNDAR MODERNO</span>
-                <h3>NICKEL-PLATED STEEL</h3>
-                <p className="material-subtitle">Acero Niquelado (~8% Ni / 92% Acero)</p>
-                <p className="material-text">
-                  Núcleo de acero con alambre exterior de acero recubierto con níquel. Es la cuerda más fabricada y vendida en el planeta hoy en día.
-                </p>
-                <div className="spec-table">
-                  <div className="spec-row">
-                    <span>CARÁCTER:</span>
-                    <strong>Brillante, cortante, con pegada agresiva</strong>
-                  </div>
-                  <div className="spec-row">
-                    <span>SALIDA:</span>
-                    <strong>Mayor reactividad magnética (más señal a las pastillas)</strong>
-                  </div>
-                  <div className="spec-row">
-                    <span>IDEAL PARA:</span>
-                    <strong>Rock moderno, Metal, distorsiones pesadas y mezclas densas</strong>
-                  </div>
-                </div>
-              </div>
+            <h3 className="text-2xl font-bold text-amber-400 mb-4">El Mito del Drop Tuning</h3>
+            <h4 className="text-lg font-semibold text-slate-200 mb-4">¿Sets &ldquo;Light Top, Heavy Bottom&rdquo; (Agudos ligeros, Graves pesados)?</h4>
+
+            <p className="text-slate-300 mb-6 leading-relaxed">
+              Históricamente, los guitarristas han utilizado calibres híbridos (ej. 10-52) para afinaciones como Drop D o Drop C, creyendo que las cuerdas graves más gruesas compensarían la pérdida de tensión al afinar más grave.
+            </p>
+
+            <div className="bg-slate-900 rounded-lg p-5 border border-red-500/30">
+              <h5 className="text-red-400 font-bold mb-2 flex items-center">
+                <svg className="w-5 h-5 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                El Problema Matemático
+              </h5>
+              <p className="text-slate-400 text-sm mb-4">
+                Según los expertos de <em>Stringjoy</em>, las matemáticas no cuadran. Al bajar la afinación de la sexta cuerda (de E a D), la tensión cae drásticamente. Incluso usando un juego de &ldquo;graves pesados&rdquo;, la cuerda afinada en Drop D a menudo queda con <strong>menos tensión</strong> que el resto de las cuerdas, sintiéndose floja y desequilibrada (flubby).
+              </p>
+
+              <h5 className="text-green-400 font-bold mb-2 mt-4 flex items-center">
+                <svg className="w-5 h-5 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                La Solución
+              </h5>
+              <p className="text-slate-400 text-sm">
+                Para afinaciones bajas (Drop Tuning), la recomendación profesional es utilizar <strong>Sets Custom (Personalizados)</strong>. Utilizar calculadoras de tensión te permite armar un set donde cada cuerda mantenga una tensión uniforme (ej. entre 16 y 18 lbs por cuerda) independientemente de a qué nota esté afinada, logrando así un mástil estable y una ejecución perfecta.
+              </p>
             </div>
           </div>
-        )}
+        </div>
+      </main>
 
-        {/* Tab Content: Drop Tuning */}
-        {activeTab === "afinacion" && (
-          <div className="recursos-panel">
-            <div className="tuning-box">
-              <div className="tuning-header">
-                <span className="tuning-alert">DESMITIFICANDO EL DROP TUNING</span>
-                <h3>¿SETS &ldquo;LIGHT TOP / HEAVY BOTTOM&rdquo;?</h3>
-                <p>
-                  Muchos guitarristas compran sets híbridos (ej. 10-52) pensando que una sexta cuerda más gruesa compensa
-                  automáticamente la afinación en Drop D o Drop C. Los cálculos de tensión demuestran otra realidad.
-                </p>
-              </div>
+      {/* Guide footer */}
+      <footer className="bg-slate-900 border-t border-slate-800 py-6 text-center mt-auto">
+        <p className="text-slate-500 text-sm">Generado en base a las fuentes proporcionadas del cuaderno del usuario.</p>
+      </footer>
 
-              <div className="tuning-breakdown">
-                <div className="breakdown-card math-problem">
-                  <div className="breakdown-label">EL PROBLEMA MATEMÁTICO</div>
-                  <h4>Tensión desbalanceada</h4>
-                  <p>
-                    Al bajar una cuerda completa (de Mi a Re, o Re a Do), la tensión cae dramáticamente en libras de presión.
-                    En sets comerciales estándar, la cuerda afinada en Drop a menudo queda con <strong>significativamente menos tensión</strong> que las demás,
-                    quedando blanda (*flubby*), trasteando y perdiendo afinación en ataques fuertes.
-                  </p>
-                </div>
-
-                <div className="breakdown-card solution">
-                  <div className="breakdown-label solution-label">LA SOLUCIÓN PROFESIONAL</div>
-                  <h4>Sets calculados por tensión uniforme</h4>
-                  <p>
-                    La regla de oro para afinaciones bajas es armar o elegir calibres calculados por tensión uniforme
-                    (manteniendo entre <strong>16 y 18 lbs de tensión por cuerda</strong> de forma balanceada).
-                    Esto preserva el alma del mástil recto, elimina trasteos no deseados y proporciona la misma respuesta táctil bajo la púa en todas las cuerdas.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </section>
-
+      {/* Mongus site footer */}
       <Footer />
-    </main>
+    </div>
   );
 }
