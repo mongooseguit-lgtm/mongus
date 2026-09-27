@@ -70,6 +70,10 @@ export default function DiarioPage() {
   const handleNotifySubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!ticketEmail) return;
+    // No backend: hand the sign-up request to the visitor's mail app instead of pretending it was saved.
+    window.location.href = `mailto:mongooseguit@gmail.com?subject=${encodeURIComponent(
+      "Avísame de nuevas fechas de Mongus"
+    )}&body=${encodeURIComponent(`Quiero recibir avisos de fechas en: ${ticketEmail}`)}`;
     setNotified(true);
   };
 
@@ -183,13 +187,14 @@ export default function DiarioPage() {
           </div>
           {notified ? (
             <div className="notify-success">
-              ✓ Estás registrado para la preventa exclusiva de fechas.
+              ✉ Se abrió tu app de correo: presiona Enviar para quedar en la lista. Si no se abrió, escribe a mongooseguit@gmail.com.
             </div>
           ) : (
             <form onSubmit={handleNotifySubmit} className="notify-form">
               <input
                 type="email"
                 required
+                maxLength={254}
                 placeholder="tu-correo@ejemplo.com"
                 value={ticketEmail}
                 onChange={(e) => setTicketEmail(e.target.value)}

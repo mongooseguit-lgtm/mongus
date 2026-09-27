@@ -11,17 +11,21 @@ export default function ContactoPage() {
     motivo: "booking",
     mensaje: "",
   });
-  const [status, setStatus] = useState<"idle" | "sending" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "opened">("idle");
+
+  // No backend: the message is handed to the visitor's mail app instead of pretending it was sent.
+  const mailtoHref = `mailto:mongooseguit@gmail.com?subject=${encodeURIComponent(
+    `[MONGUS CONTACTO: ${formData.motivo.toUpperCase()}] de ${formData.nombre}`
+  )}&body=${encodeURIComponent(
+    `Nombre: ${formData.nombre}\nEmail: ${formData.email}\nMotivo: ${formData.motivo}\n\nMensaje:\n${formData.mensaje}`
+  )}`;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.nombre || !formData.email || !formData.mensaje) return;
 
-    setStatus("sending");
-    // Simulate swift submission feedback
-    setTimeout(() => {
-      setStatus("success");
-    }, 600);
+    window.location.href = mailtoHref;
+    setStatus("opened");
   };
 
   const handleReset = () => {
@@ -50,22 +54,15 @@ export default function ContactoPage() {
               Disponible para presentaciones en vivo, sesiones de estudio, prensa y consultas técnicas sobre guitarra y producción.
             </p>
 
-            {status === "success" ? (
+            {status === "opened" ? (
               <div className="contacto-success-banner" role="alert">
-                <div className="success-badge">✓ MENSAJE REGISTRADO</div>
-                <h4>¡Gracias por ponerte en contacto, {formData.nombre}!</h4>
+                <div className="success-badge">✉ ÚLTIMO PASO</div>
+                <h4>Tu mensaje está listo en tu app de correo, {formData.nombre}.</h4>
                 <p>
-                  Hemos recibido tu solicitud referente a <strong>{formData.motivo.toUpperCase()}</strong>. Responderemos a <code>{formData.email}</code> a la brevedad.
+                  Para que llegue, presiona <strong>Enviar</strong> en tu app de correo. Si no se abrió, usa el botón de abajo o escribe directamente a <code>mongooseguit@gmail.com</code>.
                 </p>
                 <div className="success-actions">
-                  <a
-                    href={`mailto:mongooseguit@gmail.com?subject=${encodeURIComponent(
-                      `[MONGUS CONTACTO: ${formData.motivo.toUpperCase()}] de ${formData.nombre}`
-                    )}&body=${encodeURIComponent(
-                      `Nombre: ${formData.nombre}\nEmail: ${formData.email}\nMotivo: ${formData.motivo}\n\nMensaje:\n${formData.mensaje}`
-                    )}`}
-                    className="mail-fallback-btn"
-                  >
+                  <a href={mailtoHref} className="mail-fallback-btn">
                     ABRIR EN TU APP DE CORREO ↗
                   </a>
                   <button type="button" onClick={handleReset} className="reset-btn">
@@ -83,6 +80,7 @@ export default function ContactoPage() {
                     id="nombre"
                     type="text"
                     required
+                    maxLength={100}
                     placeholder="Ej. Andrés Ramos"
                     value={formData.nombre}
                     onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
@@ -97,6 +95,7 @@ export default function ContactoPage() {
                     id="email"
                     type="email"
                     required
+                    maxLength={254}
                     placeholder="tucorreo@ejemplo.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -125,6 +124,7 @@ export default function ContactoPage() {
                   <textarea
                     id="mensaje"
                     required
+                    maxLength={1500}
                     rows={5}
                     placeholder="Describe los detalles de la fecha, proyecto o consulta..."
                     value={formData.mensaje}
@@ -132,12 +132,8 @@ export default function ContactoPage() {
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={status === "sending"}
-                  className="contacto-submit-btn"
-                >
-                  {status === "sending" ? "TRANSMITIENDO..." : "ENVIAR MENSAJE ↗"}
+                <button type="submit" className="contacto-submit-btn">
+                  ESCRIBIR CORREO ↗
                 </button>
               </form>
             )}
