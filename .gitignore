@@ -39,5 +39,6 @@ yarn-error.log*
 /outputs/
 /work/
 
-# local source photography (optimized copies live in public/photos)
+# local source photography and audio (published copies live in public/photos and public/musica)
 /fotos/
+/musica/

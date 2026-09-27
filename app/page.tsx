@@ -120,8 +120,34 @@ export default function Home() {
               Escucha los primeros adelantos en exclusiva directamente desde el reproductor.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-              <AudioPlayer src="/musica/under-the-rain.mp3" title="UNDER THE RAIN" />
-              <AudioPlayer src="/musica/BATTLE.mp3" title="BATTLE" />
+              <AudioPlayer
+                src="/musica/under-the-rain-m2.m4a"
+                title="UNDER THE RAIN"
+                trackNumber="01"
+                subtitle="MASTER M2 · 4:51"
+                thumbnail="/photos/thumb-under-the-rain.jpeg"
+              />
+              <AudioPlayer
+                src="/musica/battle.m4a"
+                title="BATTLE"
+                trackNumber="02"
+                subtitle="MASTER · 6:47"
+                thumbnail="/photos/thumb-battle.jpeg"
+              />
+              <AudioPlayer
+                src="/musica/i-know.m4a"
+                title="I KNOW"
+                trackNumber="03"
+                subtitle="STUDIO DESK · 5:51"
+                thumbnail="/photos/thumb-i-know.jpg"
+              />
+              <AudioPlayer
+                src="/musica/under-the-rain-classic.mp3"
+                title="UNDER THE RAIN"
+                trackNumber="04"
+                subtitle="ORIGINAL MIX · 4:46"
+                thumbnail="/photos/thumb-under-the-rain-classic.jpg"
+              />
             </div>
             <div className="platforms" aria-label="Plataformas próximamente">
               <span>SPOTIFY</span><span>APPLE MUSIC</span><span>YOUTUBE</span>
