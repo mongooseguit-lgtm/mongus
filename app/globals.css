@@ -38,8 +38,17 @@ nav { display: flex; gap: clamp(1.3rem, 3.2vw, 3.8rem); }
 nav a, .menu-index { font: 600 0.67rem/1 var(--font-geist-mono), monospace; letter-spacing: 0.14em; text-transform: uppercase; }
 nav a { position: relative; }
 nav a::after { background: var(--acid); bottom: -8px; content: ""; height: 1px; left: 0; position: absolute; transform: scaleX(0); transform-origin: left; transition: transform .25s; width: 100%; }
-nav a:hover::after { transform: scaleX(1); }
+nav a:hover::after, nav a.active::after { transform: scaleX(1); }
 .menu-index { color: #868681; justify-self: end; }
+
+.home-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.home-screen .hero {
+  flex: 1;
+}
 
 .hero {
   background: var(--ink);
@@ -114,14 +123,14 @@ nav a:hover::after { transform: scaleX(1); }
 .section-heading { align-items: start; display: grid; grid-template-columns: 1fr 2fr; }
 .section h2, footer h2 { font-size: clamp(3.5rem, 8.3vw, 9rem); font-weight: 800; letter-spacing: -.075em; line-height: .84; margin: 0; text-transform: uppercase; }
 .section h2 em, footer h2 em { color: var(--red); font-family: Georgia, serif; font-weight: 400; text-transform: none; }
-.release-card { border-top: 1px solid var(--line); display: grid; gap: clamp(2rem, 5vw, 6rem); grid-template-columns: minmax(280px, .9fr) 1.1fr; margin-top: 8rem; padding-top: 2rem; }
-.cover-art { aspect-ratio: 1; background: var(--red); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; padding: 1.5rem; position: relative; }
+.release-card { border-top: 1px solid var(--line); display: grid; gap: clamp(2rem, 5vw, 6rem); grid-template-columns: minmax(280px, .9fr) 1.1fr; margin-top: 8rem; padding-top: 2rem; align-items: start; }
+.cover-art { aspect-ratio: 1; background: var(--red); display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; padding: 1.5rem; position: sticky; top: 96px; align-self: start; }
 .cover-art::after { background: linear-gradient(135deg, rgba(237,59,36,.15), rgba(13,13,12,.88)); content: ""; inset: 0; position: absolute; }
 .cover-photo { filter: grayscale(1) contrast(1.25); height: 100%; inset: 0; mix-blend-mode: multiply; object-fit: cover; object-position: 43% center; opacity: .8; position: absolute; width: 100%; }
 .cover-top, .cover-bottom { font: 600 .65rem/1 var(--font-geist-mono), monospace; letter-spacing: .12em; position: relative; z-index: 2; }
 .cover-bottom { align-self: end; }
 .cover-letter { color: var(--paper); font-size: clamp(10rem, 26vw, 30rem); font-weight: 900; left: -.08em; letter-spacing: -.18em; line-height: .55; mix-blend-mode: difference; position: absolute; top: 23%; z-index: 2; }
-.release-info { align-self: center; max-width: 650px; }
+.release-info { align-self: start; max-width: 650px; }
 .status { font: 700 .65rem/1 var(--font-geist-mono), monospace; letter-spacing: .14em; }
 .status span { animation: pulse 1.8s infinite; background: var(--red); border-radius: 50%; display: inline-block; height: 8px; margin-right: 8px; width: 8px; }
 @keyframes pulse { 50% { opacity: .25; } }
@@ -316,7 +325,7 @@ nav a:hover::after { transform: scaleX(1); }
 .gallery-item:hover .archive-photo img { filter: saturate(1.12) contrast(1.04); transform: scale(1.035); }
 .archive-photo span { color: white; font: 600 .6rem/1 var(--font-geist-mono), monospace; left: 1rem; letter-spacing: .12em; position: absolute; top: 1rem; z-index: 2; }
 .gallery-item figcaption { display: flex; font: 500 .58rem/1 var(--font-geist-mono), monospace; justify-content: space-between; letter-spacing: .09em; margin-top: .8rem; }
-.gallery-callout { font-size: clamp(3.8rem, 8vw, 9rem); font-weight: 800; letter-spacing: -.07em; line-height: .83; margin: -2rem 0 0; position: relative; text-transform: uppercase; z-index: 2; }
+.gallery-callout { font-size: clamp(3.8rem, 8vw, 9rem); font-weight: 800; letter-spacing: -.07em; line-height: .83; margin: clamp(4rem, 6vw, 7rem) 0 0; position: relative; text-transform: uppercase; z-index: 2; }
 .gallery-callout em { color: var(--acid); font-family: Georgia, serif; font-weight: 400; text-transform: none; }
 
 .journal { display: grid; gap: 8vw; grid-template-columns: .8fr 1.2fr; }
